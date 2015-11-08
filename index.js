@@ -8,6 +8,7 @@ var extend = require('node.extend');
 var Signup = require('lockit-signup');
 var Login = require('lockit-login');
 var ForgotPassword = require('lockit-forgot-password');
+var ChangeEmail = require('lockit-change-email');
 var DeleteAccount = require('lockit-delete-account');
 var utils = require('lockit-utils');
 var configDefault = require('./config.default.js');
@@ -42,6 +43,7 @@ var Lockit = module.exports = function(config) {
   var login = new Login(this.config, this.adapter);
   var deleteAccount = new DeleteAccount(this.config, this.adapter);
   var forgotPassword = new ForgotPassword(this.config, this.adapter);
+  var changeEmail = new ChangeEmail(this.config, this.adapter);
 
   // router
   this.router = express.Router();
@@ -61,9 +63,10 @@ var Lockit = module.exports = function(config) {
   this.router.use(login.router);
   this.router.use(deleteAccount.router);
   this.router.use(forgotPassword.router);
+  this.router.use(changeEmail.router);
 
   // pipe events to lockit
-  var emitters = [signup, login, deleteAccount, forgotPassword];
+  var emitters = [signup, login, deleteAccount, forgotPassword, changeEmail];
   utils.pipe(emitters, that);
 
   // special event for quick start
@@ -133,6 +136,8 @@ Lockit.prototype.rest = function() {
     this.config.login.logoutRoute,
     this.config.forgotPassword.route,
     this.config.forgotPassword.route + '/:token',
+    this.config.changeEmail.route,
+    this.config.changeEmail.route + '/:token',
     this.config.deleteAccount.route,
   ];
 

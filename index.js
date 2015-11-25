@@ -21,69 +21,81 @@ var configDefault = require('./config.default.js');
  * @constructor
  * @param {Object} config
  */
-var Lockit = module.exports = function(config) {
+var Lockit = module.exports = function(config)
+{
+	if(!(this instanceof Lockit))
+		return new Lockit(config);
 
-  if (!(this instanceof Lockit)) return new Lockit(config);
+	this.config = config || {};
+	var that = this;
 
-  this.config = config || {};
-  var that = this;
+	if(!this.config.db)
+		this.database();
+	if(!this.config.emailType || !this.config.emailSettings)
+		this.email();
 
-  if (!this.config.db) this.database();
-  if (!this.config.emailType || !this.config.emailSettings) this.email();
+	// use default values for all values that aren't provided
+	this.config = extend(true, {}, configDefault, this.config);
 
-  // use default values for all values that aren't provided
-  this.config = extend(true, {}, configDefault, this.config);
+	// router
+	this.router = express.Router();
 
-  // create db adapter only once and pass it to modules
-  var db = utils.getDatabase(this.config);
-  this.adapter = this.config.db.adapter || require(db.adapter)(this.config);
+	// create db adapter only once and pass it to modules
+	var db = utils.getDatabase(this.config);
+	this.adapter = this.config.db.adapter || require(db.adapter)(this.config, function(err, db)
+		{
+			if(err)
+				throw err;
+			else
+			{
+				// load all required modules
+				var signup = new Signup(that.config, that.adapter);
+				var login = new Login(that.config, that.adapter);
+				var deleteAccount = new DeleteAccount(that.config, that.adapter);
+				var forgotPassword = new ForgotPassword(that.config, that.adapter);
+				var changeEmail = new ChangeEmail(that.config, that.adapter);
 
-  // load all required modules
-  var signup = new Signup(this.config, this.adapter);
-  var login = new Login(this.config, this.adapter);
-  var deleteAccount = new DeleteAccount(this.config, this.adapter);
-  var forgotPassword = new ForgotPassword(this.config, this.adapter);
-  var changeEmail = new ChangeEmail(this.config, this.adapter);
+				// send all GET requests for lockit routes to '/index.html'
+				if(that.config.rest)
+					that.rest();
 
-  // router
-  this.router = express.Router();
+				// expose name and email to template engine
+				that.router.use(function(req, res, next)
+				{
+					res.locals.name = req.session.name || '';
+					res.locals.email = req.session.email || '';
+					next();
+				});
 
-  // send all GET requests for lockit routes to '/index.html'
-  if (this.config.rest) this.rest();
+				// add submodule routes
+				that.router.use(signup.router);
+				that.router.use(login.router);
+				that.router.use(deleteAccount.router);
+				that.router.use(forgotPassword.router);
+				that.router.use(changeEmail.router);
 
-  // expose name and email to template engine
-  this.router.use(function(req, res, next) {
-    res.locals.name = req.session.name || '';
-    res.locals.email = req.session.email || '';
-    next();
-  });
+				// pipe events to lockit
+				var emitters = [signup, login, deleteAccount, forgotPassword, changeEmail];
+				utils.pipe(emitters, that);
 
-  // add submodule routes
-  this.router.use(signup.router);
-  this.router.use(login.router);
-  this.router.use(deleteAccount.router);
-  this.router.use(forgotPassword.router);
-  this.router.use(changeEmail.router);
+				// special event for quick start
+				signup.on('signup::post', function(user)
+					{
+						if(that.config.db.url === 'sqlite://' && that.config.db.name === ':memory:')
+						{
+							message = 'http://localhost:3000/signup/' + user.signupToken;
+							console.log(
+								chalk.bgBlack.green('lockit'),
+								chalk.bgBlack.yellow(message),
+								'cmd + double click on os x'
+							);
+						}
+						that.emit('signup::post', user);
+					});
 
-  // pipe events to lockit
-  var emitters = [signup, login, deleteAccount, forgotPassword, changeEmail];
-  utils.pipe(emitters, that);
-
-  // special event for quick start
-  signup.on('signup::post', function(user) {
-    if (that.config.db.url === 'sqlite://' && that.config.db.name === ':memory:') {
-      message = 'http://localhost:3000/signup/' + user.signupToken;
-      console.log(
-        chalk.bgBlack.green('lockit'),
-        chalk.bgBlack.yellow(message),
-        'cmd + double click on os x'
-      );
-    }
-    that.emit('signup::post', user);
-  });
-
-  events.EventEmitter.call(this);
-
+				events.EventEmitter.call(that);
+			}
+		});
 };
 
 util.inherits(Lockit, events.EventEmitter);

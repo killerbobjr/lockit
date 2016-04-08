@@ -21,10 +21,10 @@ var configDefault = require('./config.default.js');
  * @constructor
  * @param {Object} config
  */
-var Lockit = module.exports = function(config)
+var Lockit = module.exports = function(config, next)
 {
 	if(!(this instanceof Lockit))
-		return new Lockit(config);
+		return new Lockit(config, next);
 
 	this.config = config || {};
 	var that = this;
@@ -45,7 +45,7 @@ var Lockit = module.exports = function(config)
 	this.adapter = this.config.db.adapter || require(db.adapter)(this.config, function(err, db)
 		{
 			if(err)
-				throw err;
+				next(err);
 			else
 			{
 				// load all required modules
@@ -94,6 +94,8 @@ var Lockit = module.exports = function(config)
 					});
 
 				events.EventEmitter.call(that);
+				
+				next();
 			}
 		});
 };

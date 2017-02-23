@@ -62,8 +62,8 @@ var Lockit = module.exports = function(config, next)
 				// expose name and email to template engine
 				that.router.use(function(req, res, next)
 				{
-					res.locals.name = req.session.name || '';
-					res.locals.email = req.session.email || '';
+					res.locals.name = req.user?req.user.name || '':'';
+					res.locals.email = req.user?req.user.email || '':'';
 					next();
 				});
 

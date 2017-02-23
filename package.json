@@ -32,7 +32,7 @@
     "lockit-login": "git://github.com/killerbobjr/lockit-login.git",
     "lockit-signup": "git://github.com/killerbobjr/lockit-signup.git",
     "lockit-sql-adapter": "^0.5.1",
-    "lockit-utils": "git://github.com/killerbobjr/lockit-utils.git",
+    "lockit-utils": "git://github.com/killerbobjr/lockit-utilities.git",
     "node.extend": "^1.1.2",
     "sqlite3": "^3.0.0"
   },

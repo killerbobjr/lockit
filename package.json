@@ -26,32 +26,32 @@
     "url": "https://github.com/killerbobjr/lockit"
   },
   "dependencies": {
-    "chalk": "^0.5.1",
+    "chalk": "^1.1.3",
     "lockit-delete-account": "git://github.com/killerbobjr/lockit-delete-account.git",
     "lockit-forgot-password": "git://github.com/killerbobjr/lockit-forgot-password.git",
     "lockit-login": "git://github.com/killerbobjr/lockit-login.git",
     "lockit-signup": "git://github.com/killerbobjr/lockit-signup.git",
-    "lockit-sql-adapter": "^0.5.1",
+    "lockit-sql-adapter": "git://github.com/killerbobjr/lockit-sql-adapter.git",
     "lockit-utils": "git://github.com/killerbobjr/lockit-utilities.git",
-    "node.extend": "^1.1.2",
-    "sqlite3": "^3.0.0"
+    "node.extend": "^1.1.6",
+    "sqlite3": "^3.1.8"
   },
   "devDependencies": {
-    "body-parser": "^1.9.0",
-    "cookie-parser": "^1.3.3",
-    "cookie-session": "^1.0.2",
-    "errorhandler": "^1.2.0",
-    "express": "^4.9.5",
-    "grunt": "^0.4.5",
-    "grunt-contrib-jshint": "^0.10.0",
-    "grunt-mocha-test": "^0.12.0",
-    "jade": "^1.7.0",
-    "lockit-couchdb-adapter": "^0.5.0",
+    "body-parser": "^1.17.1",
+    "cookie-parser": "^1.4.3",
+    "cookie-session": "^2.0.0-beta.1",
+    "errorhandler": "^1.5.0",
+    "express": "^4.15.2",
+    "grunt": "^1.0.1",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-mocha-test": "^0.13.2",
+    "jade": "^1.11.0",
+    "lockit-couchdb-adapter": "git://github.com/killerbobjr/lockit-couchdb-adapter.git",
     "lockit-template-blank": "git://github.com/killerbobjr/lockit-template-blank.git",
-    "mocha": "^1.21.4",
-    "nodemailer-stub-transport": "^0.1.4",
-    "should": "^4.0.4",
+    "mocha": "^3.2.0",
+    "nodemailer-stub-transport": "^1.1.0",
+    "should": "^11.2.1",
     "static-favicon": "^2.0.0-alpha",
-    "supertest": "^0.13.0"
+    "supertest": "^3.0.0"
   }
 }

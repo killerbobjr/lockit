@@ -27,9 +27,11 @@
   },
   "dependencies": {
     "chalk": "^1.1.3",
+    "lockit-change-email": "git://github.com/killerbobjr/lockit-change-email.git",
     "lockit-delete-account": "git://github.com/killerbobjr/lockit-delete-account.git",
     "lockit-forgot-password": "git://github.com/killerbobjr/lockit-forgot-password.git",
     "lockit-login": "git://github.com/killerbobjr/lockit-login.git",
+    "lockit-mongodb-adapter": "git://github.com/killerbobjr/lockit-mongodb-adapter.git",
     "lockit-signup": "git://github.com/killerbobjr/lockit-signup.git",
     "lockit-sql-adapter": "git://github.com/killerbobjr/lockit-sql-adapter.git",
     "lockit-utils": "git://github.com/killerbobjr/lockit-utilities.git",

@@ -1,7 +1,7 @@
 {
   "name": "lockit",
   "version": "1.3.0",
-  "description": "Authentication solution for Express",
+  "description": "Authentication solution for Express, legacy version",
   "main": "index.js",
   "scripts": {
     "test": "grunt"
@@ -27,14 +27,14 @@
   },
   "dependencies": {
     "chalk": "^2.4.2",
-    "lockit-change-email": "git://github.com/killerbobjr/lockit-change-email.git",
-    "lockit-delete-account": "git://github.com/killerbobjr/lockit-delete-account.git",
-    "lockit-forgot-password": "git://github.com/killerbobjr/lockit-forgot-password.git",
-    "lockit-login": "git://github.com/killerbobjr/lockit-login.git",
-    "lockit-mongodb-adapter": "git://github.com/killerbobjr/lockit-mongodb-adapter.git",
-    "lockit-signup": "git://github.com/killerbobjr/lockit-signup.git",
-    "lockit-sql-adapter": "git://github.com/killerbobjr/lockit-sql-adapter.git",
-    "lockit-utils": "git://github.com/killerbobjr/lockit-utilities.git",
+    "lockit-change-email": "git://github.com/killerbobjr/lockit-change-email.git#legacy",
+    "lockit-delete-account": "git://github.com/killerbobjr/lockit-delete-account.git#legacy",
+    "lockit-forgot-password": "git://github.com/killerbobjr/lockit-forgot-password.git#legacy",
+    "lockit-login": "git://github.com/killerbobjr/lockit-login.git#legacy",
+    "lockit-mongodb-adapter": "git://github.com/killerbobjr/lockit-mongodb-adapter.git#legacy",
+    "lockit-signup": "git://github.com/killerbobjr/lockit-signup.git#legacy",
+    "lockit-sql-adapter": "git://github.com/killerbobjr/lockit-sql-adapter.git#legacy",
+    "lockit-utils": "git://github.com/killerbobjr/lockit-utilities.git#legacy",
     "node.extend": "^2.0.2",
     "sqlite3": "^4.0.9"
   },
@@ -48,8 +48,8 @@
     "grunt-contrib-jshint": "^2.1.0",
     "grunt-mocha-test": "^0.13.3",
     "pug": "^2.0.4",
-    "lockit-couchdb-adapter": "git://github.com/killerbobjr/lockit-couchdb-adapter.git",
-    "lockit-template-blank": "git://github.com/killerbobjr/lockit-template-blank.git",
+    "lockit-couchdb-adapter": "git://github.com/killerbobjr/lockit-couchdb-adapter.git#legacy",
+    "lockit-template-blank": "git://github.com/killerbobjr/lockit-template-blank.git#legacy",
     "mocha": "^6.2.0",
     "nodemailer-stub-transport": "^1.1.0",
     "should": "^13.2.3",

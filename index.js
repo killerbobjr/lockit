@@ -160,6 +160,7 @@ Lockit.prototype.rest = function()
 		this.config.signup.resendRoute + '/:token',
 		this.config.login.route,
 		this.config.login.logoutRoute,
+		this.config.login.twoFactorRoute,
 		this.config.forgotPassword.route,
 		this.config.forgotPassword.route + '/:token',
 		this.config.changeEmail.route,
@@ -176,7 +177,8 @@ Lockit.prototype.rest = function()
 					{
 						res.render(that.config.rest.index,
 							{
-								basedir: req.app.get('views')
+								basedir: req.app.get('views'),
+								route: route
 							});
 					}
 					else

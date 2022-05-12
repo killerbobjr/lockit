@@ -40,7 +40,7 @@ var Lockit = module.exports = function(config, next)
 	}
 
 	// use default values for all values that aren't provided
-	this.config = extend(true, {}, configDefault, this.config);
+	//this.config = extend(true, {}, configDefault, this.config);
 
 	// router
 	this.router = express.Router();

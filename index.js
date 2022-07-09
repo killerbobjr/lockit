@@ -13,41 +13,52 @@ var	path = require('path'),
 	configDefault = require('./config.default.js');
 
 
-
 /**
  * Lockit constructor function.
  *
  * @constructor
  * @param {Object} config
  */
-var Lockit = module.exports = function(config, next)
+function Lockit()
 {
 	if(!(this instanceof Lockit))
 	{
-		return new Lockit(config, next);
+		return new Lockit();
 	}
+	
+	return this;
+}
 
-	this.config = config || {};
-	var that = this;
+/**
+ * Initializer
+ *
+ * @public
+ */
+Lockit.prototype.init = function(config, next)
+{
+	util.inherits(Lockit, events.EventEmitter);
 
-	if(!this.config.db)
+	lockit.config = config || {};
+	var that = lockit;
+
+	if(!lockit.config.db)
 	{
-		this.database();
+		lockit.database();
 	}
-	if(!this.config.mail.emailType || !this.config.mail.emailSettings)
+	if(!lockit.config.mail.emailType || !lockit.config.mail.emailSettings)
 	{
-		this.email();
+		lockit.email();
 	}
 
 	// use default values for all values that aren't provided
-	//this.config = extend(true, {}, configDefault, this.config);
+	//lockit.config = extend(true, {}, configDefault, lockit.config);
 
 	// router
-	this.router = express.Router();
+	lockit.router = express.Router();
 
 	// create db adapter only once and pass it to modules
-	var db = utils.getDatabase(this.config);
-	this.adapter = this.config.db.adapter || require(db.adapter)(this.config, function(err, db)
+	var db = utils.getDatabase(lockit.config);
+	lockit.adapter = lockit.config.db.adapter || require(db.adapter)(lockit.config, function(err, db)
 		{
 			if(err)
 			{
@@ -109,9 +120,6 @@ var Lockit = module.exports = function(config, next)
 		});
 };
 
-util.inherits(Lockit, events.EventEmitter);
-
-
 
 /**
  * Use SQLite as fallback database.
@@ -120,7 +128,7 @@ util.inherits(Lockit, events.EventEmitter);
  */
 Lockit.prototype.database = function()
 {
-	this.config.db = {
+	lockit.config.db = {
 		url: 'sqlite://',
 		name: ':memory:',
 		collection: 'my_user_table'
@@ -151,21 +159,21 @@ Lockit.prototype.email = function()
  */
 Lockit.prototype.rest = function()
 {
-	var that = this;
+	var that = lockit;
 	var __parentDir = path.dirname(module.parent.filename);
 
 	var routes = [
-		this.config.signup.route,
-		this.config.signup.resendRoute,
-		this.config.signup.resendRoute + '/:token',
-		this.config.login.route,
-		this.config.login.logoutRoute,
-		this.config.login.twoFactorRoute,
-		this.config.forgotPassword.route,
-		this.config.forgotPassword.route + '/:token',
-		this.config.changeEmail.route,
-		this.config.changeEmail.route + '/:token',
-		this.config.deleteAccount.route,
+		lockit.config.signup.route,
+		lockit.config.signup.resendRoute,
+		lockit.config.signup.resendRoute + '/:token',
+		lockit.config.login.route,
+		lockit.config.login.logoutRoute,
+		lockit.config.login.twoFactorRoute,
+		lockit.config.forgotPassword.route,
+		lockit.config.forgotPassword.route + '/:token',
+		lockit.config.changeEmail.route,
+		lockit.config.changeEmail.route + '/:token',
+		lockit.config.deleteAccount.route,
 	];
 
 	routes.forEach(function(route)
@@ -188,3 +196,5 @@ Lockit.prototype.rest = function()
 				});
 		});
 };
+
+var lockit = module.exports = exports = Lockit();

@@ -29,6 +29,8 @@ function Lockit()
 	return this;
 }
 
+util.inherits(Lockit, events.EventEmitter);
+
 /**
  * Initializer
  *
@@ -36,8 +38,6 @@ function Lockit()
  */
 Lockit.prototype.init = function(config, next)
 {
-	util.inherits(Lockit, events.EventEmitter);
-
 	lockit.config = config || {};
 	var that = lockit;
 

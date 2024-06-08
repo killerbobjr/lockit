@@ -36,7 +36,7 @@
     "lockit-sql-adapter": "https://github.com/killerbobjr/lockit-sql-adapter.git",
     "lockit-utils": "https://github.com/killerbobjr/lockit-utilities.git",
     "node.extend": "^2.0.2",
-    "sqlite3": "^4.0.9"
+    "sqlite3": "^5.1.7"
   },
   "devDependencies": {
     "body-parser": "^1.19.0",

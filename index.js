@@ -40,6 +40,7 @@ Lockit.prototype.init = function(config, next)
 {
 	lockit.config = config || {};
 	var that = lockit;
+	lockit.config.that = that;
 
 	if(!lockit.config.db)
 	{
